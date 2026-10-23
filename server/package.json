@@ -1,0 +1,26 @@
+{
+  "name": "netsentinel-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "NetSentinel HTTP + WebSocket server",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
+    "test": "node tests/test_http.js && node tests/test_security.js && node tests/test_ws.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.0",
+    "@types/ws": "^8.5.13",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

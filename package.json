@@ -1,0 +1,25 @@
+{
+  "name": "netsentinel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "C packet-capture engine with Node-API bridge",
+  "main": "index.js",
+  "gypfile": true,
+  "scripts": {
+    "build": "node-gyp rebuild",
+    "clean": "node-gyp clean",
+    "pretest": "npm run build",
+    "test": "bash test/run.sh",
+    "test:parser": "make test",
+    "test:api": "sudo node --test addon/tests/test_api.js",
+    "test:concurrency": "sudo node --test addon/tests/test_concurrency.js",
+    "test:addon": "bash -c 'sudo node --test addon/tests/test_api.js addon/tests/test_concurrency.js && sudo node --test addon/tests/test_exit.js'",
+    "test:dashboard": "cd dashboard && npm test"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.0.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^11.0.0"
+  }
+}

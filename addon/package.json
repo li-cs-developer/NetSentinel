@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "test": "sudo bash -c 'for f in tests/test_api.js tests/test_concurrency.js tests/test_swap.js tests/test_cycle.js tests/test_exit.js; do node --test \"$f\" || exit 1; done'",
+    "test:manual": "sudo node tests/test_addon.js lo"
+  }
+}

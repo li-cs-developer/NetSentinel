@@ -1,0 +1,40 @@
+services:
+  netsentinel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: netsentinel:latest
+    container_name: netsentinel
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"   # bind to loopback; Apache proxies it
+    environment:
+      NODE_ENV: production
+      API_TOKEN: "${API_TOKEN:?set API_TOKEN in your shell}"
+      AUTO_START: "1"
+      CAPTURE_INTERFACE: "${CAPTURE_INTERFACE:-}"
+      STATS_INTERVAL_MS: "500"
+    # CAP_NET_RAW is what AF_PACKET needs. CAP_NET_ADMIN lets the
+    # kernel deliver promiscuous traffic on real NICs.
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    # not strictly necessary, but limits the blast radius: the
+    # container can read packets but can't touch the host FS.
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+    healthcheck:
+      test: ["CMD", "node", "-e",
+             "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

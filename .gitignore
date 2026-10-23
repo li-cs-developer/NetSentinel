@@ -1,0 +1,35 @@
+# Build artifacts
+build/
+engine/build/
+*.o
+*.a
+*.so
+*.node
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Node
+node_modules/
+dist/
+
+# Environment / secrets
+.env
+.env.local
+dashboard/.env.local
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+
+# Docker
+docker-compose.override.yml
+
+# SSL certificates and private keys
+deploy/apache/*.crt
+deploy/apache/*.key
+deploy/apache/*.pem
