@@ -33,3 +33,9 @@ docker-compose.override.yml
 deploy/apache/*.crt
 deploy/apache/*.key
 deploy/apache/*.pem
+
+# Electron
+desktop/node_modules/
+desktop/out/
+desktop/release/
+desktop/.vite/

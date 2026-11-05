@@ -1,0 +1,61 @@
+{
+  "name": "netsentinel-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NetSentinel desktop shell (Electron)",
+  "main": "main.js",
+  "author": "NetSentinel contributors",
+  "license": "MIT",
+
+  "scripts": {
+    "start": "electron .",
+    "rebuild-addon": "cd .. && npx node-gyp rebuild --target=\"$(npx electron --version | tr -d v)\" --dist-url=https://electronjs.org/headers",
+    "dist": "npm run rebuild-addon && electron-builder",
+    "dist:linux": "npm run rebuild-addon && electron-builder --linux",
+    "dist:win": "npm run rebuild-addon && electron-builder --win",
+    "clean": "rm -rf out node_modules"
+  },
+
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+
+  "build": {
+    "appId": "com.netsentinel.app",
+    "productName": "NetSentinel",
+    "directories": {
+      "output": "out",
+      "buildResources": "resources"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "resources/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../build/Release/netsentinel_addon_electron.node",
+        "to": "addon/netsentinel_addon_electron.node"
+      },
+      {
+        "from": "../dashboard/dist",
+        "to": "dashboard"
+      }
+    ],
+    "linux": {
+      "target": ["deb", "rpm", "AppImage"],
+      "category": "Network",
+      "icon": "resources/icon.png"
+    },
+    "win": {
+      "target": ["nsis"],
+      "icon": "resources/icon.ico"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "category": "public.app-category.developer-tools",
+      "icon": "resources/icon.icns"
+    }
+  }
+}
